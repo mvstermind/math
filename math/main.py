@@ -115,9 +115,9 @@ def gen_problem(page, problem_type):
         ft.Column(
             [
                 ft.Text(f"{problem}", size=30, text_align=ft.TextAlign.CENTER),
-                txt_name := ft.TextField(label="Answer", width=200, text_size=20),
+                txt_name := ft.TextField(label="Odpowiedz", width=200, text_size=20),
                 ft.ElevatedButton(
-                    "Submit",
+                    "Dalej",
                     on_click=btn_click,
                     style=ft.ButtonStyle(padding=20),
                 ),

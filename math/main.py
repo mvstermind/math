@@ -51,7 +51,7 @@ def get_choice(page):
         ft.Column(
             [
                 ft.Text(
-                    "Choose your subject",
+                    "Wybierz swojego wojownika",
                     size=30,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,

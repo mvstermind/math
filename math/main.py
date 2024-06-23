@@ -6,19 +6,20 @@ streak = 0
 
 
 def main(page):
-    user_choice = get_choice(page)
-    choice(page, user_choice)
+    get_choice(page)
 
 
 def get_choice(page):
-    def one_picked(e):
-        pass
+    def on_choice(e):
+        choice = e.control.text.lower()
+        page.clean()
+        choice_handler(page, choice)
 
     page.add(ft.Text("Choose your subject"))
-    page.add(ft.ElevatedButton(text="division", on_click=one_picked))
-    page.add(ft.ElevatedButton(text="multiplication", on_click=one_picked))
-    page.add(ft.ElevatedButton(text="addition", on_click=one_picked))
-    page.add(ft.ElevatedButton(text="subtraction", on_click=one_picked))
+    page.add(ft.ElevatedButton(text="Division", on_click=on_choice))
+    page.add(ft.ElevatedButton(text="Multiplication", on_click=on_choice))
+    page.add(ft.ElevatedButton(text="Addition", on_click=on_choice))
+    page.add(ft.ElevatedButton(text="Subtraction", on_click=on_choice))
 
 
 def gen_problem(page, problem_type):
@@ -56,7 +57,7 @@ def gen_problem(page, problem_type):
     page.add(txt_name, ft.ElevatedButton("Submit", on_click=btn_click))
 
 
-def choice(page, choice):
+def choice_handler(page, choice):
     match choice:
         case "division":
             gen_problem(page, division)

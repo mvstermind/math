@@ -6,6 +6,9 @@ streak = 0
 
 
 def main(page):
+    page.title = "Matma"
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
     get_choice(page)
 
 
@@ -15,11 +18,46 @@ def get_choice(page):
         page.clean()
         choice_handler(page, choice)
 
-    page.add(ft.Text("Choose your subject"))
-    page.add(ft.ElevatedButton(text="Division", on_click=on_choice))
-    page.add(ft.ElevatedButton(text="Multiplication", on_click=on_choice))
-    page.add(ft.ElevatedButton(text="Addition", on_click=on_choice))
-    page.add(ft.ElevatedButton(text="Subtraction", on_click=on_choice))
+    choice_buttons = [
+        ft.ElevatedButton(
+            text="Dzielenie",
+            on_click=on_choice,
+            style=ft.ButtonStyle(padding=20),
+        ),
+        ft.ElevatedButton(
+            text="Mnozenie",
+            on_click=on_choice,
+            style=ft.ButtonStyle(padding=20),
+        ),
+        ft.ElevatedButton(
+            text="Dodawanie",
+            on_click=on_choice,
+            style=ft.ButtonStyle(padding=20),
+        ),
+        ft.ElevatedButton(
+            text="Odejmowanie",
+            on_click=on_choice,
+            style=ft.ButtonStyle(padding=20),
+        ),
+    ]
+
+    page.add(
+        ft.Column(
+            [
+                ft.Text(
+                    "Wybierz swojego wojownika",
+                    size=30,
+                    weight=ft.FontWeight.BOLD,
+                    text_align=ft.TextAlign.CENTER,
+                ),
+                ft.Row(
+                    choice_buttons, alignment=ft.MainAxisAlignment.CENTER, spacing=20
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=20,
+        )
+    )
 
 
 def gen_problem(page, problem_type):
@@ -30,7 +68,7 @@ def gen_problem(page, problem_type):
     def btn_click(e):
         global streak, problem, solution
         if not txt_name.value:
-            txt_name.error_text = "This field cannot be empty"
+            txt_name.error_text = "Ej no nie tak po prostu nie odpowiedziec"
             txt_name.update()
             return False
         else:
@@ -38,23 +76,47 @@ def gen_problem(page, problem_type):
             if int(answer) == int(solution):
                 streak += 1
                 page.clean()
-                page.add(ft.Text(f"Good job homie, {streak} answers "))
+                page.add(
+                    ft.Text(
+                        f"Slicznie. Masz {streak} prawidlowych odpowiedzi",
+                        size=25,
+                        color=ft.colors.GREEN,
+                    )
+                )
                 time.sleep(2)
                 page.clean()
                 gen_problem(page, problem_type)
                 return True
             else:
                 page.clean()
-                page.add(ft.Text(f"Almost, answer is {solution}"))
+                page.add(
+                    ft.Text(
+                        f"Zle, odpowiedz to:{solution}",
+                        size=25,
+                        color=ft.colors.RED,
+                    )
+                )
                 time.sleep(2)
                 page.clean()
                 gen_problem(page, problem_type)
                 return True
 
-    page.add(ft.Text(f"{problem}"))
-    txt_name = ft.TextField(label="Answer")
-
-    page.add(txt_name, ft.ElevatedButton("Submit", on_click=btn_click))
+    page.add(
+        ft.Column(
+            [
+                ft.Text(f"{problem}", size=30, text_align=ft.TextAlign.CENTER),
+                txt_name := ft.TextField(label="Answer", width=200, text_size=20),
+                ft.ElevatedButton(
+                    "Submit",
+                    on_click=btn_click,
+                    style=ft.ButtonStyle(padding=20),
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=20,
+        )
+    )
 
 
 def choice_handler(page, choice):

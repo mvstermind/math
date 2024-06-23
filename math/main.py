@@ -14,7 +14,13 @@ def main(page):
 
 def get_choice(page):
     def on_choice(e):
-        choice = e.control.text.lower()
+        choice_map = {
+            "Dzielenie": "division",
+            "Mnozenie": "multiplication",
+            "Dodawanie": "addition",
+            "Odejmowanie": "subtraction",
+        }
+        choice = choice_map.get(e.control.text, "").lower()
         page.clean()
         choice_handler(page, choice)
 
@@ -45,7 +51,7 @@ def get_choice(page):
         ft.Column(
             [
                 ft.Text(
-                    "Wybierz swojego wojownika",
+                    "Choose your subject",
                     size=30,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
@@ -63,12 +69,15 @@ def get_choice(page):
 def gen_problem(page, problem_type):
     global streak, problem, solution
     problem, solution = problem_type()
-    problem, solution = problem.replace("$", ""), solution.replace("$", "")
+    problem = problem.replace("$", "")
+
+    # Replace LaTeX-like symbols with standard mathematical symbols
+    problem = problem.replace("\\div", "÷").replace("\\cdot", "×")
 
     def btn_click(e):
         global streak, problem, solution
         if not txt_name.value:
-            txt_name.error_text = "Ej no nie tak po prostu nie odpowiedziec"
+            txt_name.error_text = "This field cannot be empty"
             txt_name.update()
             return False
         else:
@@ -91,7 +100,7 @@ def gen_problem(page, problem_type):
                 page.clean()
                 page.add(
                     ft.Text(
-                        f"Zle, odpowiedz to:{solution}",
+                        f"Zle, odpowiedz to: {solution}",
                         size=25,
                         color=ft.colors.RED,
                     )

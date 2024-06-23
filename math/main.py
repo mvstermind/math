@@ -70,6 +70,7 @@ def gen_problem(page, problem_type):
     global streak, problem, solution
     problem, solution = problem_type()
     problem = problem.replace("$", "")
+    solution = solution.replace("$", "")
 
     # Replace LaTeX-like symbols with standard mathematical symbols
     problem = problem.replace("\\div", "÷").replace("\\cdot", "×")

@@ -1,22 +1,28 @@
 import flet as ft
+from mathgenerator import addition, multiplication, division, subtraction
 
-import mathgenerator
+
+problem, solution = addition()
+problem, solution = problem.replace("$", ""), solution.replace("$", "")
 
 
 def main(page):
-    problem, solution = mathgenerator.addition()
-    solution = int(solution)
+    def btn_click(e):
+        if not txt_name.value:
+            txt_name.error_text = "This field cannot be empty"
+            page.update()
+        else:
+            answer = txt_name.value
+            page.clean()
+            if int(answer) == int(solution):
+                page.add(ft.Text("Good job homie"))
+            else:
+                page.add(ft.Text(f"Almost, answer is {answer}"))
 
-    problem = problem.replace("$", "")
+    page.add(ft.Text(f"{problem}"))
+    txt_name = ft.TextField(label="Answer")
 
-    def button_click(e):
-        if answer == solution:
-            page.add(ft.Text(value="brawo"))
-
-    t = ft.Text(value=problem)
-    page.add(t)
-    answer = ft.TextField(hint_text="Answer")
-    page.add(answer, ft.ElevatedButton("Say hello!", on_click=button_click))
+    page.add(txt_name, ft.ElevatedButton("Submit", on_click=btn_click))
 
 
 ft.app(target=main)

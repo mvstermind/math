@@ -78,7 +78,7 @@ def gen_problem(page, problem_type):
     def btn_click(e):
         global streak, problem, solution
         if not txt_name.value:
-            txt_name.error_text = "This field cannot be empty"
+            txt_name.error_text = "Ej no to nie moze byc puste co"
             txt_name.update()
             return False
         else:

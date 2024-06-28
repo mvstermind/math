@@ -86,7 +86,7 @@ def gen_problem(page, problem_type):
             if int(answer) == int(solution):
                 streak += 1
                 with open(file_name, "a") as file:
-                    file.write(str(streak))
+                    file.write(str(streak) + "\n")
                 page.clean()
                 gen_problem(page, problem_type)
                 return True
@@ -159,9 +159,13 @@ def choice_handler(page, choice):
 
 
 def read_streak(file: str) -> str:
-    with open(file, "r") as content:
-        count = content.readline()
-    return count
+    try:
+        with open(file, "r") as content:
+            lines = content.readlines()
+            total_streaks = len(lines)
+        return str(total_streaks)
+    except FileNotFoundError:
+        return "0"
 
 
 ft.app(target=main)

@@ -1,3 +1,4 @@
+from typing import Text
 import flet as ft
 from mathgenerator import addition, division, multiplication, subtraction
 import time
@@ -86,15 +87,6 @@ def gen_problem(page, problem_type):
             if int(answer) == int(solution):
                 streak += 1
                 page.clean()
-                page.add(
-                    ft.Text(
-                        f"Slicznie. Masz {streak} prawidlowych odpowiedzi",
-                        size=25,
-                        color=ft.colors.GREEN,
-                    )
-                )
-                time.sleep(2)
-                page.clean()
                 gen_problem(page, problem_type)
                 return True
             else:
@@ -125,6 +117,14 @@ def gen_problem(page, problem_type):
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=20,
+        )
+    )
+    page.add(
+        ft.Text(
+            f"Poprawne odpowiedzi: {streak}",
+            text_align=ft.TextAlign.CENTER,
+            size=20,
+            color=ft.colors.GREEN_500,
         )
     )
 

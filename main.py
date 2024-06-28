@@ -2,7 +2,8 @@ import flet as ft
 from mathgenerator import addition, division, multiplication, subtraction
 import time
 
-streak = 0
+streak: int = 0
+file_name: str = "data.txt"
 
 
 def main(page):
@@ -84,6 +85,8 @@ def gen_problem(page, problem_type):
             answer = txt_name.value
             if int(answer) == int(solution):
                 streak += 1
+                with open(file_name, "a") as file:
+                    file.write(str(streak))
                 page.clean()
                 gen_problem(page, problem_type)
                 return True
@@ -126,13 +129,20 @@ def gen_problem(page, problem_type):
             spacing=20,
         ),
     )
+
     page.add(
         ft.Text(
             f"Poprawne odpowiedzi: {streak}",
             text_align=ft.TextAlign.CENTER,
             size=20,
+            color=ft.colors.GREEN_100,
+        ),
+        ft.Text(
+            f"Wszystkie odpowiedzi: {read_streak(file_name)}",
+            text_align=ft.TextAlign.CENTER,
+            size=20,
             color=ft.colors.GREEN_500,
-        )
+        ),
     )
 
 
@@ -146,6 +156,12 @@ def choice_handler(page, choice):
             gen_problem(page, addition)
         case "subtraction":
             gen_problem(page, subtraction)
+
+
+def read_streak(file: str) -> str:
+    with open(file, "r") as content:
+        count = content.readline()
+    return count
 
 
 ft.app(target=main)

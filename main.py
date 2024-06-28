@@ -1,4 +1,3 @@
-from typing import Text
 import flet as ft
 from mathgenerator import addition, division, multiplication, subtraction
 import time
@@ -73,7 +72,6 @@ def gen_problem(page, problem_type):
     problem = problem.replace("$", "")
     solution = solution.replace("$", "")
 
-    # Replace LaTeX-like symbols with standard mathematical symbols
     problem = problem.replace("\\div", "÷").replace("\\cdot", "×")
 
     def btn_click(e):
@@ -102,6 +100,17 @@ def gen_problem(page, problem_type):
                 page.clean()
                 gen_problem(page, problem_type)
                 return True
+
+    def back_to_menu(e):
+        page.clean()
+        get_choice(page)
+
+    page.add(
+        ft.ElevatedButton(
+            "Menu",
+            on_click=back_to_menu,
+        )
+    )
 
     page.add(
         ft.Column(

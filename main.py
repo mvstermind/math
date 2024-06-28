@@ -105,13 +105,11 @@ def gen_problem(page, problem_type):
         page.clean()
         get_choice(page)
 
-    page.add(
-        ft.ElevatedButton(
-            "Menu",
-            on_click=back_to_menu,
-        )
+    button = ft.ElevatedButton(
+        "Menu",
+        on_click=back_to_menu,
     )
-
+    page.add(button)
     page.add(
         ft.Column(
             [
@@ -126,7 +124,7 @@ def gen_problem(page, problem_type):
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=20,
-        )
+        ),
     )
     page.add(
         ft.Text(
